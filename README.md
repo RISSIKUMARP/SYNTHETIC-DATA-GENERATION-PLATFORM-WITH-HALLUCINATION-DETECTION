@@ -202,45 +202,6 @@ Agents communicate with each other. The orchestrator can loop, retry, and trigge
 ### 3. Meta-Validate
 A separate check verifies that GPT-4o-mini's own validation reasoning is grounded in actual data — catching cases where the LLM hallucinates facts about the records it's reviewing.
 
----
-
-## Success Metrics
-
-| Metric | Target |
-|---|---|
-| Synthetic records generated | 100,000 |
-| Statistical fidelity (vs real data) | ≥ 95% |
-| Hallucination detection accuracy | ≥ 98% |
-| PII leakage | 0% (k-anonymity k=100) |
-
----
-
-## Running the Pipeline
-
-```bash
-# Generate synthetic data
-python -m src.generation.pipeline
-
-# Run validation agents
-python -m src.validation.orchestrator
-
-# Start the API
-uvicorn src.api.main:app --reload
-
-# Launch the dashboard
-streamlit run src/dashboard/app.py
-```
-
-### Docker
-
-```bash
-docker-compose up --build
-```
-
----
-
-## API Endpoints
-
 | Method | Endpoint | Description |
 |---|---|---|
 | `POST` | `/generate` | Generate synthetic records |
@@ -248,15 +209,5 @@ docker-compose up --build
 | `GET` | `/report/{batch_id}` | Get quality report |
 | `GET` | `/health` | Health check |
 
----
-
-## License
-
-MIT
-
----
-
-## Acknowledgments
-
-- Dataset: [Kaggle Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) by ML Group, ULB
+-: [Kaggle Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) by ML Group, ULB
 - Synthetic generation: [SDV (Synthetic Data Vault)](https://sdv.dev/)
