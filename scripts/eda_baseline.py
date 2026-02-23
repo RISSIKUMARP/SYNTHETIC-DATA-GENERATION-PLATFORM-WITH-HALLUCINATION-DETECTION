@@ -1,17 +1,3 @@
-"""
-Week 1 Day 2 — Exploratory Data Analysis & Baseline Generation
-================================================================
-Credit Card Fraud Detection Dataset (Kaggle)
-Purpose: Understand data + establish statistical baselines for synthetic data fidelity testing
-
-Outputs:
-  - reports/eda/  → all PNG visualizations
-  - reports/eda/baseline_stats.json → statistical fingerprint for Week 2-3 comparison
-  - Console → summary findings
-
-Run: python eda_baseline.py
-"""
-
 import os
 import json
 import warnings
@@ -45,9 +31,6 @@ def save_fig(fig, name):
 
 
 # ─── LOAD DATA ────────────────────────────────────────────────────────
-print("=" * 70)
-print("LOADING DATASET")
-print("=" * 70)
 
 df = pd.read_csv(DATA_PATH)
 print(f"Shape: {df.shape[0]:,} rows × {df.shape[1]} columns")
@@ -59,9 +42,8 @@ print(f"Duplicate rows: {df.duplicated().sum()}")
 
 
 # ─── 1. CLASS DISTRIBUTION ───────────────────────────────────────────
-print("\n" + "=" * 70)
 print("1. CLASS DISTRIBUTION (Fraud vs Legitimate)")
-print("=" * 70)
+
 
 class_counts = df["Class"].value_counts()
 class_pct = df["Class"].value_counts(normalize=True) * 100
@@ -93,9 +75,9 @@ save_fig(fig, "01_class_distribution.png")
 
 
 # ─── 2. AMOUNT DISTRIBUTION ──────────────────────────────────────────
-print("\n" + "=" * 70)
+
 print("2. AMOUNT DISTRIBUTION")
-print("=" * 70)
+
 
 print(f"\nOverall Amount stats:")
 print(df["Amount"].describe().to_string())
@@ -144,9 +126,9 @@ save_fig(fig, "02_amount_distribution.png")
 
 
 # ─── 3. TIME DISTRIBUTION ────────────────────────────────────────────
-print("\n" + "=" * 70)
+
 print("3. TIME DISTRIBUTION")
-print("=" * 70)
+
 
 time_hours = df["Time"] / 3600
 print(f"Time range: {time_hours.min():.1f} to {time_hours.max():.1f} hours")
@@ -176,9 +158,9 @@ save_fig(fig, "03_time_distribution.png")
 
 
 # ─── 4. V-FEATURE DISTRIBUTIONS ──────────────────────────────────────
-print("\n" + "=" * 70)
+
 print("4. PCA FEATURE DISTRIBUTIONS (V1-V28)")
-print("=" * 70)
+
 
 v_features = [f"V{i}" for i in range(1, 29)]
 v_stats = df[v_features].describe().T
@@ -231,9 +213,9 @@ save_fig(fig, "05_all_v_features.png")
 
 
 # ─── 5. CORRELATION ANALYSIS ─────────────────────────────────────────
-print("\n" + "=" * 70)
+
 print("5. CORRELATION ANALYSIS")
-print("=" * 70)
+
 
 # full correlation matrix
 corr_matrix = df.corr()
@@ -269,9 +251,9 @@ save_fig(fig, "07_class_correlations.png")
 
 
 # ─── 6. OUTLIER DETECTION ────────────────────────────────────────────
-print("\n" + "=" * 70)
+
 print("6. OUTLIER DETECTION")
-print("=" * 70)
+
 
 # IQR method on Amount
 Q1 = df["Amount"].quantile(0.25)
@@ -319,9 +301,9 @@ save_fig(fig, "08_outlier_analysis.png")
 
 
 # ─── 7. FRAUD DEEP DIVE ──────────────────────────────────────────────
-print("\n" + "=" * 70)
+
 print("7. FRAUD PATTERN ANALYSIS")
-print("=" * 70)
+
 
 fraud = df[df["Class"] == 1]
 legit = df[df["Class"] == 0]
@@ -405,9 +387,8 @@ save_fig(fig, "09_fraud_patterns.png")
 
 
 # ─── 8. BASELINE STATS (for synthetic data comparison) ───────────────
-print("\n" + "=" * 70)
+
 print("8. SAVING BASELINE STATISTICS")
-print("=" * 70)
 
 baseline = {
     "metadata": {
@@ -475,9 +456,8 @@ print(f"    → {len(baseline['correlations']['v_feature_pairs'])} V-feature cor
 
 
 # ─── 9. SUMMARY ──────────────────────────────────────────────────────
-print("\n" + "=" * 70)
+
 print("EDA SUMMARY — KEY FINDINGS")
-print("=" * 70)
 
 print(f"""
 Dataset: 284,807 transactions over ~48 hours
@@ -505,4 +485,3 @@ for f in sorted(os.listdir(OUTPUT_DIR)):
     print(f"  • {f}")
 
 print(f"\nTotal output files: {len(os.listdir(OUTPUT_DIR))}")
-print("Done! Ready for Week 1 Day 3-5: CTGAN generation.\n")

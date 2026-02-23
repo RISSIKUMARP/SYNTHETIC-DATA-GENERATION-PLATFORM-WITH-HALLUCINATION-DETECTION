@@ -208,6 +208,3 @@ A separate check verifies that GPT-4o-mini's own validation reasoning is grounde
 | `GET` | `/validate/{batch_id}` | Run validation on a batch |
 | `GET` | `/report/{batch_id}` | Get quality report |
 | `GET` | `/health` | Health check |
-
--: [Kaggle Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) by ML Group, ULB
-- Synthetic generation: [SDV (Synthetic Data Vault)](https://sdv.dev/)
