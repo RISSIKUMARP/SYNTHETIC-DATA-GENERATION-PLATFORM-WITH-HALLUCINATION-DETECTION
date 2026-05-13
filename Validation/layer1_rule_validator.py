@@ -14,7 +14,10 @@ from typing import List, Dict, Any, Tuple, Optional, Callable
 from dataclasses import dataclass, field
 from enum import Enum
 import google.genai as genai
-from config import config
+try:
+    from Validation.config import config
+except ImportError:
+    from config import config
 
 
 class Severity(Enum):
@@ -540,7 +543,7 @@ if __name__ == "__main__":
     print("LAYER 1 RULE VALIDATOR - Gemini Rule Discovery")
     print("="*80)
     
-    from config import validate_config
+    from Validation.config import validate_config
     if not validate_config():
         print("\nPlease fix configuration errors before running.")
         exit(1)

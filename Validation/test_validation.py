@@ -14,9 +14,14 @@ import pandas as pd
 import json
 from pathlib import Path
 
-from layer1_rule_validator import Layer1RuleValidator
-from layer2_statistical import Layer2StatisticalValidator
-from config import config, validate_config
+try:
+    from Validation.layer1_rule_validator import Layer1RuleValidator
+    from Validation.layer2_statistical import Layer2StatisticalValidator
+    from Validation.config import config, validate_config
+except ImportError:
+    from layer1_rule_validator import Layer1RuleValidator
+    from layer2_statistical import Layer2StatisticalValidator
+    from config import config, validate_config
 
 
 def test_layer1(data: pd.DataFrame, enable_gemini: bool = True):

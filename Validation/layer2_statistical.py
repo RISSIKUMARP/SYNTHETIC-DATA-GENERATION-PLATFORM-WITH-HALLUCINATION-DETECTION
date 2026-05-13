@@ -16,7 +16,10 @@ from dataclasses import dataclass, field
 from scipy import stats
 from scipy.spatial.distance import jensenshannon
 from sklearn.ensemble import IsolationForest
-from config import config
+try:
+    from Validation.config import config
+except ImportError:
+    from config import config
 
 
 @dataclass
@@ -560,7 +563,7 @@ if __name__ == "__main__":
     print("LAYER 2 STATISTICAL VALIDATOR - Pure Python")
     print("="*80)
     
-    from config import validate_config
+    from Validation.config import validate_config
     if not validate_config():
         print("\nPlease fix configuration errors before running.")
         exit(1)
